@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: monolith_to_microservices_user
+  labels:
+    run: monolith_to_microservices_user
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: monolith_to_microservices_user

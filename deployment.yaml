@@ -1,0 +1,54 @@
+apiVersion: apps/v1/user
+kind: Deployment
+metadata:
+  name: monolith_to_microservices_user
+  labels:
+    app: monolith_to_microservices_user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monolith_to_microservices_user
+  template:
+    metadata:
+      labels:
+        app: monolith_to_microservices_user
+    spec:
+      containers:
+      - name: monolith_to_microservices_user
+        image: mhayes30125/monolith_to_microservices_user:latest
+        env:
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: my-secrets
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-secrets
+              key: password 
+        - name: POSTGRES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: my-secrets
+              key: database
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: my-secrets
+              key: host
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: my-secrets
+              key: jwt
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /usr/src/app/healthy
+          initialDelaySeconds: 5
+          periodSeconds: 5        
