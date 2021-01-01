@@ -8,6 +8,8 @@ WORKDIR /usr/src/app
 # package.json and package-lock.json
 COPY package*.json ./
 
+COPY healthy ./
+
 # Install dependencies
 RUN npm install
 
@@ -15,10 +17,6 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
-FROM node:13
-
-COPY --from=current_build /usr/src/app/www /usr/src/app/www
 
 # Bind the port that the image will run on
 EXPOSE 8080
