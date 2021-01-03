@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: monolith-to-microservices-user
   labels:
-    run: monolith-to-microservices-user
+    app: monolith-to-microservices-user
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    run: monolith-to-microservices-user
+    app: monolith-to-microservices-user
